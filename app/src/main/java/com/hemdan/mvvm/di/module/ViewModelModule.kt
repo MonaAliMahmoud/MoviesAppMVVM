@@ -1,9 +1,13 @@
 package com.hemdan.mvvm.di.module
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.hemdan.mvvm.di.helper.ViewModelKey
 import com.hemdan.mvvm.ui.base.ViewModelFactory
+import com.hemdan.mvvm.ui.main.actorslist.ActorsListViewModel
 import dagger.Binds
 import dagger.Module
+import dagger.multibindings.IntoMap
 
 /**
  * Created by Mohammed Hemdan on 4/14/19.
@@ -12,10 +16,10 @@ import dagger.Module
  */
 @Module
 abstract class ViewModelModule {
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(HomeViewModel::class)
-//    abstract fun bindHomeViewModel(homeViewModel: HomeViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(ActorsListViewModel::class)
+    abstract fun bindHomeViewModel(homeViewModel: ActorsListViewModel): ViewModel
 
     @Binds
     internal abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory) : ViewModelProvider.Factory

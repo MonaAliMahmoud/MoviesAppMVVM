@@ -1,14 +1,14 @@
 package com.hemdan.mvvm.ui.main.actorslist
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.hemdan.mvvm.R
+import com.hemdan.mvvm.ui.base.BaseFragment
 
-class ActorsListFragment : Fragment() {
+class ActorsListFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
