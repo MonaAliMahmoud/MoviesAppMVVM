@@ -44,6 +44,10 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
 
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta05'
+
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+
 //    dagger
     implementation rootProject.ext.libraries.dagger
     implementation rootProject.ext.libraries.daggerAndroid
