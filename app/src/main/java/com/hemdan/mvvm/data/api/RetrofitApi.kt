@@ -1,0 +1,13 @@
+package com.hemdan.mvvm.data.api
+
+import com.hemdan.mvvm.data.model.PopularList
+import com.hemdan.mvvm.di.module.NetworkModule.Companion.POPULAR_PEOPLE_URL
+import io.reactivex.Single
+import retrofit2.http.GET
+import retrofit2.http.Query
+
+interface RetrofitApi {
+    @GET(POPULAR_PEOPLE_URL)
+    fun getPopularData(@Query("page") page: Int): Single<PopularList>
+
+}
