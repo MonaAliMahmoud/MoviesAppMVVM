@@ -19,7 +19,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(ActorsListViewModel::class)
-    abstract fun bindHomeViewModel(homeViewModel: ActorsListViewModel): ViewModel
+    abstract fun bindActorsListViewModel(actorsListViewModel: ActorsListViewModel): ViewModel
 
     @Binds
     internal abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory) : ViewModelProvider.Factory

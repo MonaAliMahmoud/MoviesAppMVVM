@@ -15,5 +15,5 @@ import javax.inject.Singleton
 abstract class RepositoryModule {
     @Binds
     @Singleton
-    abstract fun bindHomeViewRepository(actorsListRepository: ActorsListRepository): BaseRepository
+    abstract fun bindActorsListRepository(actorsListRepository: ActorsListRepository): BaseRepository
 }
