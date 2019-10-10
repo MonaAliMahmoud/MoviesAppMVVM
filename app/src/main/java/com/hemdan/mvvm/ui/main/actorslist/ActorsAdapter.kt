@@ -43,6 +43,11 @@ class ActorsAdapter(private val info: ArrayList<PopularInfo>, private var contex
         holder.bindData(popularInfo!!)
     }
 
+    fun add(popularInfo: List<PopularInfo>) {
+        info.addAll(popularInfo)
+        notifyDataSetChanged()
+    }
+
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal var popName: TextView
         internal var popDepart: TextView

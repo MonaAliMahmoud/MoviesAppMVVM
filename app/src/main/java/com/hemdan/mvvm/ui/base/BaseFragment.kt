@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import com.hemdan.mvvm.di.helper.Injectable
 
 /**
  * Created by Mohammed Hemdan on 4/14/19.
  * Email : mohammed.hemdan.faraj@gmail.com
  * Github : https://github.com/mhemdan
  */
-abstract class BaseFragment: Fragment() {
+abstract class BaseFragment: Fragment() ,Injectable {
 
     @LayoutRes
     abstract fun getLayoutResourceId(): Int

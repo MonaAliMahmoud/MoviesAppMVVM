@@ -33,7 +33,18 @@ class NetworkModule {
     @Provides
     @Singleton
     fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        return OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor)
+        return OkHttpClient.Builder().addInterceptor { chain ->
+                val request = chain.request()
+                val url = request.url()
+                val newUrl= url.newBuilder().addQueryParameter(API_KEY, API_KEY_VALUE)
+                    .build()
+
+                val builder = request.newBuilder()
+                builder.url(newUrl)
+
+                chain.proceed(builder.build())
+            }
+            .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(10000, TimeUnit.SECONDS)
             .writeTimeout(10000, TimeUnit.SECONDS)
             .readTimeout(30000, TimeUnit.SECONDS)
