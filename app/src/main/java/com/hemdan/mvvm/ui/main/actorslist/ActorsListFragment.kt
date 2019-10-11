@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.hemdan.mvvm.R
 import com.hemdan.mvvm.data.model.PopularInfo
 import com.hemdan.mvvm.ui.base.BaseFragment
@@ -30,6 +31,18 @@ class ActorsListFragment : BaseFragment() {
         configRecycleView(popularInfos)
         observeViewModel()
         actorsListViewModel.getActors()
+
+        actorsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val currentItems = listLayoutManager!!.childCount
+                val scrolledItems = listLayoutManager!!.findFirstCompletelyVisibleItemPosition()
+                val totalItems = listLayoutManager!!.itemCount
+                if (currentItems + scrolledItems == totalItems) {
+                    actorsListViewModel.loadNextPage()
+                }
+            }
+        })
     }
 
     private fun observeViewModel(){

@@ -27,4 +27,9 @@ class ActorsListViewModel @Inject constructor(): BaseViewModel<ActorsListReposit
     fun getActorList(): MutableLiveData<List<PopularInfo>> {
         return popularInfo
     }
+
+    fun loadNextPage(){
+        pageNumber++
+        getActors()
+    }
 }
