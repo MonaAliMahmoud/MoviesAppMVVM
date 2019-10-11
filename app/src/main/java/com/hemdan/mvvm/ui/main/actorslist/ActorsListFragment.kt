@@ -26,6 +26,7 @@ class ActorsListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        listLayoutManager = LinearLayoutManager(context)
         configRecycleView(popularInfos)
         observeViewModel()
         actorsListViewModel.getActors()
@@ -39,7 +40,7 @@ class ActorsListFragment : BaseFragment() {
     }
 
     private fun configRecycleView(popularInfos: ArrayList<PopularInfo>) {
-        listAdapter = ActorsAdapter(popularInfos, activity!!)
+        listAdapter = ActorsAdapter(popularInfos, context!!)
         actorsList.adapter = listAdapter
         actorsList.setHasFixedSize(true)
         actorsList.setItemViewCacheSize(20)
