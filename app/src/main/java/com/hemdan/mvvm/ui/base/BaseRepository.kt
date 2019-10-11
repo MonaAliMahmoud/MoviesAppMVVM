@@ -7,5 +7,5 @@ import javax.inject.Inject
  * Email : mohammed.hemdan.faraj@gmail.com
  * Github : https://github.com/mhemdan
  */
-open class BaseRepository @Inject constructor() {
+abstract class BaseRepository  {
 }

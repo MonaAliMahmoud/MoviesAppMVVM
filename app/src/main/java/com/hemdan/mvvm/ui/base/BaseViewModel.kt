@@ -17,7 +17,7 @@ import javax.inject.Inject
  * Email : mohammed.hemdan.faraj@gmail.com
  * Github : https://github.com/mhemdan
  */
-open class BaseViewModel<Repository : BaseRepository> : ViewModel()  {
+abstract class BaseViewModel<Repository : BaseRepository> : ViewModel()  {
     @Inject
     lateinit var repository: Repository
 
