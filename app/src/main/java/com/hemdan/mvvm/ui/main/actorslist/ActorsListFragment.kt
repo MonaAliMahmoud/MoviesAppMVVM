@@ -12,8 +12,7 @@ import javax.inject.Inject
 
 class ActorsListFragment : BaseFragment() {
 
-    private lateinit var listAdapter: ActorsAdapter
-    private var listLayoutManager: LinearLayoutManager? = null
+    private var listAdapter = ActorsAdapter()
 
     override fun getLayoutResourceId(): Int = R.layout.fragment_actors_list
 
@@ -23,22 +22,9 @@ class ActorsListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listLayoutManager = LinearLayoutManager(context)
-        configRecycleView()
+        setupList()
         observeViewModel()
         actorsListViewModel.getActors()
-
-        actorsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val currentItems = listLayoutManager!!.childCount
-                val scrolledItems = listLayoutManager!!.findFirstCompletelyVisibleItemPosition()
-                val totalItems = listLayoutManager!!.itemCount
-                if (currentItems + scrolledItems == totalItems) {
-                    actorsListViewModel.loadNextPage()
-                }
-            }
-        })
     }
 
     private fun observeViewModel(){
@@ -48,11 +34,23 @@ class ActorsListFragment : BaseFragment() {
             })
     }
 
-    private fun configRecycleView() {
-        listAdapter = ActorsAdapter()
+    private fun setupList() {
         actorsList.adapter = listAdapter
         actorsList.setHasFixedSize(true)
         actorsList.setItemViewCacheSize(20)
+        val listLayoutManager = LinearLayoutManager(context)
         actorsList.layoutManager = listLayoutManager
+
+        actorsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val currentItems = listLayoutManager.childCount
+                val scrolledItems = listLayoutManager.findFirstCompletelyVisibleItemPosition()
+                val totalItems = listLayoutManager.itemCount
+                if (currentItems + scrolledItems == totalItems) {
+                    actorsListViewModel.loadNextPage()
+                }
+            }
+        })
     }
 }
