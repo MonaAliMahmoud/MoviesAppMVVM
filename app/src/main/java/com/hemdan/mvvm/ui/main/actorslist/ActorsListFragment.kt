@@ -44,7 +44,7 @@ class ActorsListFragment : BaseFragment() {
     private fun observeViewModel(){
         actorsListViewModel.getActorList()
             .observe(this, Observer{ listOfActors->
-                listAdapter.add(listOfActors)
+                listAdapter.addItems(listOfActors)
             })
     }
 

@@ -44,7 +44,7 @@ class ActorsAdapter: RecyclerView.Adapter<ActorsAdapter.ListViewHolder>() {
         holder.bindData(popularInfo!!)
     }
 
-    fun add(popularInfo: List<PopularInfo>) {
+    fun addItems(popularInfo: List<PopularInfo>) {
         info.addAll(popularInfo)
         notifyDataSetChanged()
     }
