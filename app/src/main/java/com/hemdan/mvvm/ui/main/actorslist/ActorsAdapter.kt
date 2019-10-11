@@ -1,6 +1,5 @@
 package com.hemdan.mvvm.ui.main.actorslist
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,7 +55,6 @@ class ActorsAdapter: RecyclerView.Adapter<ActorsAdapter.ListViewHolder>() {
         init {
             popImg = itemView.findViewById<View>(R.id.imgActor) as ImageView
             this.popName = itemView.findViewById<View>(R.id.txtActorName) as TextView
-            Log.i("Name", popName.toString())
             popDepart = itemView.findViewById<View>(R.id.txtActorDepart) as TextView
         }
 

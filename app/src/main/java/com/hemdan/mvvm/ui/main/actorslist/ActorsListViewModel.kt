@@ -1,6 +1,5 @@
 package com.hemdan.mvvm.ui.main.actorslist
 
-import android.util.Log
 import com.hemdan.mvvm.data.model.PopularInfo
 import com.hemdan.mvvm.ui.base.BaseViewModel
 import io.reactivex.functions.Consumer
@@ -18,7 +17,6 @@ class ActorsListViewModel @Inject constructor(): BaseViewModel<ActorsListReposit
     fun getActors(){
         subscribe(actorsListRepository.getUrl(pageNumber),
             Consumer { actorList->
-                Log.i("data", "Actors")
                 popularInfo.value = actorList.results
             }
         )
