@@ -10,7 +10,11 @@ import com.hemdan.mvvm.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_actors_list.*
 import javax.inject.Inject
 
-class ActorsListFragment : BaseFragment() {
+class ActorsListFragment : BaseFragment(), android.widget.SearchView.OnQueryTextListener{
+
+    private var searchView: android.widget.SearchView? = null
+    private var isSearchAction = false
+    private var searchStr = ""
 
     private var listAdapter = ActorsAdapter()
 
@@ -48,9 +52,31 @@ class ActorsListFragment : BaseFragment() {
                 val scrolledItems = listLayoutManager.findFirstCompletelyVisibleItemPosition()
                 val totalItems = listLayoutManager.itemCount
                 if (currentItems + scrolledItems == totalItems) {
-                    actorsListViewModel.loadNextPage()
+                    if (isSearchAction) {
+                        actorsListViewModel.loadNextSearchPage(searchStr)
+                    } else {
+                        actorsListViewModel.loadNextPage()
+                    }
                 }
             }
         })
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        searchStr = query!!
+        if (searchStr != "") {
+            isSearchAction = true
+            actorsListViewModel.getSearchList(searchStr)
+        }
+        searchView!!.clearFocus()
+        return true    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if (searchView!!.query.isEmpty()) {
+            isSearchAction = false
+            searchView!!.clearFocus()
+            actorsListViewModel.refreshList()
+        }
+        return true
     }
 }

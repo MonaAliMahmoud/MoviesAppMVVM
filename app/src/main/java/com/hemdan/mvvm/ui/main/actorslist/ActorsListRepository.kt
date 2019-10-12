@@ -14,4 +14,8 @@ class ActorsListRepository @Inject constructor() : BaseRepository(){
     fun getUrl(pageNum: Int): Single<PopularList> {
         return retrofitApi.getPopularData(pageNum)
     }
+
+    fun getSearchResult(searchStr: String, pageNum: Int): Single<PopularList>{
+        return retrofitApi.searchForActors(searchStr, pageNum)
+    }
 }

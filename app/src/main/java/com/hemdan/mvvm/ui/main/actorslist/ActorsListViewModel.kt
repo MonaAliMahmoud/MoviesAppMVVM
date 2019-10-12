@@ -30,4 +30,27 @@ class ActorsListViewModel @Inject constructor(): BaseViewModel<ActorsListReposit
         pageNumber++
         getActors()
     }
+
+    fun refreshList(){
+        // clear list
+        //popularInfo.clear()
+        pageNumber = 1
+        getActors()
+    }
+
+    fun getSearchList(searchStr: String) {
+        // clear list
+        // popularInfo.clear()
+        pageNumber = 1
+        subscribe(actorsListRepository.getSearchResult(searchStr, pageNumber),
+            Consumer { actorList->
+                popularInfo.value = actorList.results
+            }
+        )
+    }
+
+    fun loadNextSearchPage(searchStr: String){
+        pageNumber++
+        getSearchList(searchStr)
+    }
 }
