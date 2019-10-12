@@ -4,6 +4,7 @@ import com.hemdan.mvvm.BuildConfig
 import com.hemdan.mvvm.data.api.RetrofitApi
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -32,18 +33,26 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        return OkHttpClient.Builder().addInterceptor { chain ->
-                val request = chain.request()
-                val url = request.url()
-                val newUrl= url.newBuilder().addQueryParameter(API_KEY, API_KEY_VALUE)
-                    .build()
+    fun provideApiKey(): Interceptor{
+        return Interceptor {  chain ->
+            val request = chain.request()
+            val url = request.url()
+            val newUrl= url.newBuilder().addQueryParameter(API_KEY, API_KEY_VALUE)
+                .build()
 
-                val builder = request.newBuilder()
-                builder.url(newUrl)
+            val builder = request.newBuilder()
+            builder.url(newUrl)
 
-                chain.proceed(builder.build())
-            }
+            chain.proceed(builder.build())
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor,
+                             interceptor: Interceptor): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(interceptor)
             .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(10000, TimeUnit.SECONDS)
             .writeTimeout(10000, TimeUnit.SECONDS)
