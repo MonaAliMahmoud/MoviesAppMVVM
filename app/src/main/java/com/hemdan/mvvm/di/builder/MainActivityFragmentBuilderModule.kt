@@ -1,5 +1,6 @@
 package com.hemdan.mvvm.di.builder
 
+import com.hemdan.mvvm.ui.main.actordetails.ActorDetailsFragment
 import com.hemdan.mvvm.ui.main.actorslist.ActorsListFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -13,4 +14,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class MainActivityFragmentBuilderModule {
     @ContributesAndroidInjector
     abstract fun contributeMainFragment(): ActorsListFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeActorDetailsFragment(): ActorDetailsFragment
 }

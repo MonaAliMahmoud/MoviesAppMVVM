@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.hemdan.mvvm.di.helper.ViewModelKey
 import com.hemdan.mvvm.ui.base.ViewModelFactory
+import com.hemdan.mvvm.ui.main.actordetails.ActorDetailsViewModel
 import com.hemdan.mvvm.ui.main.actorslist.ActorsListViewModel
 import dagger.Binds
 import dagger.Module
@@ -20,6 +21,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ActorsListViewModel::class)
     abstract fun bindActorsListViewModel(actorsListViewModel: ActorsListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ActorDetailsViewModel::class)
+    abstract fun bindActorDetailsViewModel(actorDetailsViewModel: ActorDetailsViewModel): ViewModel
 
     @Binds
     internal abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory) : ViewModelProvider.Factory

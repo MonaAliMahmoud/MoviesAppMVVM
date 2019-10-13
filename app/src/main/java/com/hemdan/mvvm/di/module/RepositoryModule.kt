@@ -1,6 +1,7 @@
 package com.hemdan.mvvm.di.module
 
 import com.hemdan.mvvm.ui.base.BaseRepository
+import com.hemdan.mvvm.ui.main.actordetails.ActorDetailsRepository
 import com.hemdan.mvvm.ui.main.actorslist.ActorsListRepository
 import dagger.Binds
 import dagger.Module
@@ -16,4 +17,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindActorsListRepository(actorsListRepository: ActorsListRepository): BaseRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindActorDetailsRepository(actorDetailsRepository: ActorDetailsRepository): BaseRepository
 }

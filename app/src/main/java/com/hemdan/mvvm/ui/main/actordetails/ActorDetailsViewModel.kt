@@ -1,4 +1,6 @@
 package com.hemdan.mvvm.ui.main.actordetails
 
-class ActorDetailsViewModel {
+import com.hemdan.mvvm.ui.base.BaseViewModel
+
+class ActorDetailsViewModel: BaseViewModel<ActorDetailsRepository>() {
 }
