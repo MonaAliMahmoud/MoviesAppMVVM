@@ -26,6 +26,9 @@ class ActorsListFragment : BaseFragment(){
     @Inject
     lateinit var actorsListViewModel: ActorsListViewModel
 
+    @Inject
+    lateinit var viewmodelFactory: ActorsListViewModel_Factory
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -101,5 +104,9 @@ class ActorsListFragment : BaseFragment(){
         })
 
         searchView.clearFocus()
+    }
+
+    private fun goTODetailsScreen(){
+//        var actorDetailsViewModel: ActorDetailsViewModel = ViewModelProviders
     }
 }
