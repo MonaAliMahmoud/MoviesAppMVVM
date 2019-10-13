@@ -22,7 +22,7 @@ class ActorsListViewModel @Inject constructor(): BaseViewModel<ActorsListReposit
         )
     }
 
-    fun getActorList(): MutableLiveData<List<PopularInfo>> {
+    fun getActorLiveDataList(): MutableLiveData<List<PopularInfo>> {
         return popularInfo
     }
 
@@ -32,15 +32,12 @@ class ActorsListViewModel @Inject constructor(): BaseViewModel<ActorsListReposit
     }
 
     fun refreshList(){
-        // clear list
-        //popularInfo.clear()
-        pageNumber = 1
+        popularInfo = MutableLiveData()
         getActors()
     }
 
     fun getSearchList(searchStr: String) {
-        // clear list
-        // popularInfo.clear()
+        popularInfo = MutableLiveData()
         pageNumber = 1
         subscribe(actorsListRepository.getSearchResult(searchStr, pageNumber),
             Consumer { actorList->

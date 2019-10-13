@@ -1,6 +1,7 @@
 package com.hemdan.mvvm.ui.main.actorslist
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,10 +30,17 @@ class ActorsListFragment : BaseFragment(), android.widget.SearchView.OnQueryText
         setupList()
         observeViewModel()
         actorsListViewModel.getActors()
+
+        swipeRefresh.setOnRefreshListener {
+            Handler().postDelayed({
+                swipeRefresh.isRefreshing = false
+                actorsListViewModel.refreshList()
+            }, 1000)
+        }
     }
 
     private fun observeViewModel(){
-        actorsListViewModel.getActorList()
+        actorsListViewModel.getActorLiveDataList()
             .observe(this, Observer{ listOfActors->
                 listAdapter.addItems(listOfActors)
             })
