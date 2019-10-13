@@ -6,7 +6,7 @@ import com.hemdan.mvvm.ui.base.BaseRepository
 import io.reactivex.Single
 import javax.inject.Inject
 
-class ActorDetailsRepository: BaseRepository() {
+class ActorDetailsRepository @Inject constructor(): BaseRepository() {
 
     @Inject
     lateinit var retrofitApi: RetrofitApi

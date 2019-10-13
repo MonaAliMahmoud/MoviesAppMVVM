@@ -7,10 +7,15 @@ import android.view.MenuInflater
 import android.view.View
 import android.widget.SearchView
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hemdan.mvvm.R
 import com.hemdan.mvvm.ui.base.BaseFragment
+import com.hemdan.mvvm.ui.base.ViewModelFactory
+import com.hemdan.mvvm.ui.main.MainActivity
+import com.hemdan.mvvm.ui.main.actordetails.ActorDetailsFragment
+import com.hemdan.mvvm.ui.main.actordetails.ActorDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_actors_list.*
 import javax.inject.Inject
 
@@ -23,15 +28,16 @@ class ActorsListFragment : BaseFragment(){
 
     override fun getLayoutResourceId(): Int = R.layout.fragment_actors_list
 
-    @Inject
     lateinit var actorsListViewModel: ActorsListViewModel
 
     @Inject
-    lateinit var viewmodelFactory: ActorsListViewModel_Factory
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        actorsListViewModel = ViewModelProviders.of(this, viewModelFactory)
+                                                .get(ActorsListViewModel::class.java)
         setupList()
         observeViewModel()
         actorsListViewModel.getActors()
@@ -107,6 +113,12 @@ class ActorsListFragment : BaseFragment(){
     }
 
     private fun goTODetailsScreen(){
-//        var actorDetailsViewModel: ActorDetailsViewModel = ViewModelProviders
+        var actorDetailsViewModel: ActorDetailsViewModel = ViewModelProviders
+            .of(MainActivity(), viewModelFactory)
+            .get(ActorDetailsViewModel::class.java)
+
+        MainActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.list_fragment, ActorDetailsFragment())
+            .commit()
     }
 }

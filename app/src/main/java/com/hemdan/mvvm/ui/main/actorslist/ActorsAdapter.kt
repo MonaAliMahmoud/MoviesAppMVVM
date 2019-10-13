@@ -22,7 +22,8 @@ class ActorsAdapter: RecyclerView.Adapter<ActorsAdapter.ListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         inflater = LayoutInflater.from(parent.context)
         val listItem = inflater!!.inflate(R.layout.list_item, parent, false)
-        return ListViewHolder(listItem)    }
+        return ListViewHolder(listItem)
+    }
 
     override fun getItemCount(): Int {
         return info.size
@@ -30,17 +31,20 @@ class ActorsAdapter: RecyclerView.Adapter<ActorsAdapter.ListViewHolder>() {
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         popularInfo = info[position]
-        holder.popName.text = popularInfo!!.name
-        holder.popDepart.text = popularInfo!!.known_for_department
 
-        popImg?.context?.let {viewContext->
-            Glide.with(viewContext)
-                .load(imgPath + popularInfo!!.profile_path)
-                .placeholder(R.drawable.ic_launcher_background)
-                .into(popImg!!)
+        popularInfo?.let { popularInfos ->
+            holder.popName.text = popularInfos.name
+            holder.popDepart.text = popularInfos.known_for_department
+
+            popImg?.context?.let { viewContext ->
+                Glide.with(viewContext)
+                    .load(imgPath + popularInfos.profile_path)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(popImg!!)
+            }
+
+            holder.bindData(popularInfos)
         }
-
-        holder.bindData(popularInfo!!)
     }
 
     fun addItems(popularInfo: List<PopularInfo>) {
