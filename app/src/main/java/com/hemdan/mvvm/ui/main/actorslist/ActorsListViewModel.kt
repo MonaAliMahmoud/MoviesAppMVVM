@@ -15,6 +15,7 @@ class ActorsListViewModel @Inject constructor(): BaseViewModel<ActorsListReposit
     lateinit var actorsListRepository: ActorsListRepository
 
     fun getActors(){
+        popularInfo.value = ArrayList()
         subscribe(actorsListRepository.getUrl(pageNumber),
             Consumer { actorList->
                 popularInfo.value = actorList.results
@@ -32,16 +33,15 @@ class ActorsListViewModel @Inject constructor(): BaseViewModel<ActorsListReposit
     }
 
     fun refreshList(){
-        popularInfo = MutableLiveData()
+        popularInfo.value = ArrayList()
         getActors()
     }
 
     fun getSearchList(searchStr: String) {
-        popularInfo = MutableLiveData()
-        pageNumber = 1
+        popularInfo.value = ArrayList()
         subscribe(actorsListRepository.getSearchResult(searchStr, pageNumber),
-            Consumer { actorList->
-                popularInfo.value = actorList.results
+            Consumer { searchList->
+                popularInfo.value = searchList.results
             }
         )
     }

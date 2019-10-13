@@ -24,6 +24,7 @@ abstract class BaseFragment: Fragment() ,Injectable {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        setHasOptionsMenu(true)
         return inflater.inflate(getLayoutResourceId(),container,false)
     }
 }
