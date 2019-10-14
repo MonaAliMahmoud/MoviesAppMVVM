@@ -32,18 +32,8 @@ class ActorsAdapter: RecyclerView.Adapter<ActorsAdapter.ListViewHolder>() {
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         popularInfo = info[position]
 
-        popularInfo?.let { popularInfos ->
-            holder.popName.text = popularInfos.name
-            holder.popDepart.text = popularInfos.known_for_department
-
-            popImg?.context?.let { viewContext ->
-                Glide.with(viewContext)
-                    .load(imgPath + popularInfos.profile_path)
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .into(popImg!!)
-            }
-
-            holder.bindData(popularInfos)
+        popularInfo?.let {
+            holder.bindData(it)
         }
     }
 
@@ -53,17 +43,27 @@ class ActorsAdapter: RecyclerView.Adapter<ActorsAdapter.ListViewHolder>() {
     }
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        internal var popName: TextView
-        internal var popDepart: TextView
+        private var popName: TextView
+        private var popDepart: TextView
 
         init {
             popImg = itemView.findViewById<View>(R.id.imgActor) as ImageView
-            this.popName = itemView.findViewById<View>(R.id.txtActorName) as TextView
+            popName = itemView.findViewById<View>(R.id.txtActorName) as TextView
             popDepart = itemView.findViewById<View>(R.id.txtActorDepart) as TextView
         }
 
         fun bindData(popularInf: PopularInfo) {
-            itemView.setOnClickListener {
+                popName.text = popularInf.name
+                popDepart.text = popularInf.known_for_department
+
+                popImg?.context?.let { viewContext ->
+                    Glide.with(viewContext)
+                        .load(imgPath + popularInf.profile_path)
+                        .placeholder(R.drawable.ic_launcher_background)
+                        .into(popImg!!)
+                }
+
+                itemView.setOnClickListener {
             }
         }
     }
