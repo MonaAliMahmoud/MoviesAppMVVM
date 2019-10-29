@@ -7,14 +7,10 @@ import android.view.MenuInflater
 import android.view.View
 import android.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hemdan.mvvm.R
 import com.hemdan.mvvm.ui.base.BaseFragment
-import com.hemdan.mvvm.ui.base.ViewModelFactory
-import com.hemdan.mvvm.ui.main.actordetails.ActorDetailsFragment
-import com.hemdan.mvvm.ui.main.actordetails.ActorDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_actors_list.*
 import javax.inject.Inject
 
