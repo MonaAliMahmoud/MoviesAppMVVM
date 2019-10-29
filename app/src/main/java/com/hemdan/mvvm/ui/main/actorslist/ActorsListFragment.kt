@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hemdan.mvvm.R
 import com.hemdan.mvvm.ui.base.BaseFragment
 import com.hemdan.mvvm.ui.base.ViewModelFactory
-import com.hemdan.mvvm.ui.main.MainActivity
 import com.hemdan.mvvm.ui.main.actordetails.ActorDetailsFragment
 import com.hemdan.mvvm.ui.main.actordetails.ActorDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_actors_list.*
@@ -28,6 +27,7 @@ class ActorsListFragment : BaseFragment(){
 
     override fun getLayoutResourceId(): Int = R.layout.fragment_actors_list
 
+    @Inject
     lateinit var actorsListViewModel: ActorsListViewModel
 
     @Inject
@@ -36,8 +36,11 @@ class ActorsListFragment : BaseFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        actorsListViewModel = ViewModelProviders.of(this, viewModelFactory)
-                                                .get(ActorsListViewModel::class.java)
+        activity?.let {
+            actorsListViewModel = ViewModelProviders.of(it, viewModelFactory)
+            .get(ActorsListViewModel::class.java)
+        }
+
         setupList()
         observeViewModel()
         actorsListViewModel.getActors()
@@ -112,13 +115,13 @@ class ActorsListFragment : BaseFragment(){
         searchView.clearFocus()
     }
 
-    private fun goTODetailsScreen(){
-        var actorDetailsViewModel: ActorDetailsViewModel = ViewModelProviders
-            .of(MainActivity(), viewModelFactory)
-            .get(ActorDetailsViewModel::class.java)
-
-        MainActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.list_fragment, ActorDetailsFragment())
-            .commit()
+    fun goToDetailsScreen(){
+        activity?.let {
+            var actorDetailsViewModel: ActorDetailsViewModel = ViewModelProviders
+                .of(it, viewModelFactory)
+                .get(ActorDetailsViewModel::class.java)
+        }
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.list_fragment, ActorDetailsFragment())?.commit()
     }
 }
