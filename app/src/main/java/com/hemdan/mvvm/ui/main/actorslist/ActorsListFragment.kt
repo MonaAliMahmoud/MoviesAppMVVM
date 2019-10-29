@@ -30,16 +30,16 @@ class ActorsListFragment : BaseFragment(){
     @Inject
     lateinit var actorsListViewModel: ActorsListViewModel
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+//    @Inject
+//    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.let {
-            actorsListViewModel = ViewModelProviders.of(it, viewModelFactory)
-            .get(ActorsListViewModel::class.java)
-        }
+//        activity?.let {
+//            actorsListViewModel = ViewModelProviders.of(it, viewModelFactory)
+//            .get(ActorsListViewModel::class.java)
+//        }
 
         setupList()
         observeViewModel()
@@ -115,13 +115,13 @@ class ActorsListFragment : BaseFragment(){
         searchView.clearFocus()
     }
 
-    fun goToDetailsScreen(){
-        activity?.let {
-            var actorDetailsViewModel: ActorDetailsViewModel = ViewModelProviders
-                .of(it, viewModelFactory)
-                .get(ActorDetailsViewModel::class.java)
-        }
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.list_fragment, ActorDetailsFragment())?.commit()
-    }
+//    fun goToDetailsScreen(){
+//        activity?.let {
+//            var actorDetailsViewModel: ActorDetailsViewModel = ViewModelProviders
+//                .of(it, viewModelFactory)
+//                .get(ActorDetailsViewModel::class.java)
+//        }
+//        activity?.supportFragmentManager?.beginTransaction()
+//            ?.replace(R.id.list_fragment, ActorDetailsFragment())?.commit()
+//    }
 }
