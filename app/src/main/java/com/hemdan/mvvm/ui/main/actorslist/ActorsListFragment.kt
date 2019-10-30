@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,21 +40,35 @@ class ActorsListFragment : BaseFragment(){
 
         setupList()
         observeViewModel()
-        actorsListViewModel.getActors()
+//        actorsListViewModel.getActors()
 
         swipeRefresh.setOnRefreshListener {
             Handler().postDelayed({
-                swipeRefresh.isRefreshing = false
                 actorsListViewModel.refreshList()
             }, 1000)
         }
     }
 
+    private fun showError(message: String){
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showLading(){
+        swipeRefresh.isRefreshing = true
+        Toast.makeText(activity, "isLoading", Toast.LENGTH_SHORT).show()
+    }
+
     private fun observeViewModel(){
-        actorsListViewModel.getActorLiveDataList()
-            .observe(this, Observer{ listOfActors->
-                listAdapter.addItems(listOfActors)
-            })
+        actorsListViewModel.state.observe(this, Observer {
+                state -> when(state){
+                    is ActorsListStates.Loading -> showLading()
+                    is ActorsListStates.ActorListError -> showError(state.message!!)
+                    is ActorsListStates.ActorsList ->{
+                        swipeRefresh.isRefreshing = false
+                        listAdapter.addItems(state.actorList)
+                    }
+                }
+        })
     }
 
     private fun setupList() {

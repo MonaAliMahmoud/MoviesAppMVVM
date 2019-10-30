@@ -1,29 +1,37 @@
 package com.hemdan.mvvm.ui.main.actorslist
 
-import com.hemdan.mvvm.data.model.PopularInfo
+import androidx.lifecycle.LiveData
 import com.hemdan.mvvm.ui.base.BaseViewModel
-import io.reactivex.functions.Consumer
 import javax.inject.Inject
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.functions.Consumer
 
 class ActorsListViewModel @Inject constructor(): BaseViewModel<ActorsListRepository>() {
 
     private var pageNumber = 1
-    private var popularInfo = MutableLiveData<List<PopularInfo>>()
+    private var popularInfo = MutableLiveData<ActorsListStates>()
+    var state : LiveData<ActorsListStates> = popularInfo
 
     @Inject
     lateinit var actorsListRepository: ActorsListRepository
 
     fun getActors(){
-        popularInfo.value = ArrayList()
+        popularInfo.value = ActorsListStates.Loading
         subscribe(actorsListRepository.getUrl(pageNumber),
-            Consumer { actorList->
-                popularInfo.value = actorList.results
-            }
+            Consumer { actorList ->
+               popularInfo.value = actorList.results.let { it?.let { list ->
+                   ActorsListStates.ActorsList(
+                       list
+                   )}
+               }
+           },
+           Consumer{
+                   listError -> popularInfo.value = ActorsListStates.ActorListError(listError.message)
+           }
         )
     }
 
-    fun getActorLiveDataList(): MutableLiveData<List<PopularInfo>> {
+    fun getActorLiveDataList(): MutableLiveData<ActorsListStates> {
         return popularInfo
     }
 
@@ -33,17 +41,17 @@ class ActorsListViewModel @Inject constructor(): BaseViewModel<ActorsListReposit
     }
 
     fun refreshList(){
-        popularInfo.value = ArrayList()
+        popularInfo.value = ActorsListStates.Loading
         getActors()
     }
 
     fun getSearchList(searchStr: String) {
-        popularInfo.value = ArrayList()
-        subscribe(actorsListRepository.getSearchResult(searchStr, pageNumber),
-            Consumer { searchList->
-                popularInfo.value = searchList.results
-            }
-        )
+//        popularInfo.value = ArrayList()
+//        subscribe(actorsListRepository.getSearchResult(searchStr, pageNumber),
+//            Consumer { searchList->
+//                popularInfo.value = searchList.results
+//            }
+//        )
     }
 
     fun loadNextSearchPage(searchStr: String){
