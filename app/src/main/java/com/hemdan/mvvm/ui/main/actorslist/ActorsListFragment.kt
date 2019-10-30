@@ -40,7 +40,7 @@ class ActorsListFragment : BaseFragment(){
 
         setupList()
         observeViewModel()
-//        actorsListViewModel.getActors()
+        actorsListViewModel.getActors()
 
         swipeRefresh.setOnRefreshListener {
             Handler().postDelayed({
